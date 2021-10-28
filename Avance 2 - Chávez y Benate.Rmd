@@ -1,0 +1,144 @@
+---
+title: "Chavez_Benate_AVANCE 2"
+author: "Piero Benate"
+date: "24/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#AVANCE 2: Factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao
+Valeria Chávez y Piero Benate
+
+
+
+(Incluir todo redactado como introducción)
+(contextualizar problema público mediante perspectiva integral y con cifras)
+(justificación: [...] info soltada no hace análisis del desempleo mediante variables étnicas y culturales)
+(revisión de literatura y perspectivas teóricas)
+(identificar factores asociados a VD)
+
+(objetivo general y objetivos específicos del reporte)
+(formular pregunta de investigación)
+(formular posibles hipótesis)
+Base de datos a emplear: Encuesta permanente de empleo de la INEI, correspondiente a mayo - junio - julio de 2020 
+```{r}
+library(rio)
+data=import("Trim May-Jun-Jul20.sav")
+```
+
+
+Variables:
+- Independientes: sexo (p107), edad (p108), nivel educativo (p109a), autoidentificación étnica (P224), idioma o lengua materna (P225)
+- Dependiente: si tuvo empleo o no la semana anterior (p201)
+
+((hacer subset con corte desde 14 años de edad))
+
+```{r}
+str(data$P225)
+summary(data$p108)
+table(data$p201)
+```
+
+
+
+```{r}
+table(data$P224)
+table(data$P225)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+Análisis descriptivo (medidas de tendencia central y de dispersión)
+
+Posibles pruebas estadísticas a utilizar para responder a pregunta de investigación: modelo de regresión logística binaria
+
+
+SEXO Y EMPLEO O NO
+##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
+```{r echo=FALSE}
+Tabla1=describeBy(data1$ln.gross, data1$party)
+Tabla1
+```
+
+##### ***Boxplot de la riqueza acumulada bruta antes del fallecimiento del MP según el partido político de procedencia***
+```{r echo=FALSE}
+boxplot(data1$ln.gross~data1$party, xlab = "Partidos Políticos", ylab = "Logaritmo transformado de riqueza acumulada Bruta al momento de fallecer", col = c("green", "red"))
+```
+
+
+##### ***Gráfico de diferencia de medias de la riqueza acumulada bruta según los partidos políticos***
+```{r echo=FALSE}
+plotmeans(data1$ln.gross~data1$party, xlab = "Partidos Políticos", ylab = "Logaritmo de riqueza acumulada bruta")
+```
+
+
+
+EDAD Y EMPLEO O NO
+##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
+```{r echo=FALSE}
+Tabla1=describeBy(data1$ln.gross, data1$party)
+Tabla1
+```
+
+((O SOLO HAGO SUMMARY DE EDAD?))
+
+
+NIVEL EDUCATIVO Y EMPLEO O NO
+##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
+```{r echo=FALSE}
+Tabla1=describeBy(data1$ln.gross, data1$party)
+Tabla1
+```
+
+
+AUTOIDENTIFICACIÓN ÉTNICA Y EMPLEO O NO
+##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
+```{r echo=FALSE}
+Tabla1=describeBy(data1$ln.gross, data1$party)
+Tabla1
+```
+
+
+LENGUA MATERNA Y EMPLEO O NO
+##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
+```{r echo=FALSE}
+Tabla1=describeBy(data1$ln.gross, data1$party)
+Tabla1
+```
+
+
+
+
+
+((prueba t entre edad y empleo o no??))
+
+((prueba chi2 entre sexo, nivel educativo, autoidentificación étnica, lengua materna y empleo o no???))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
