@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #AVANCE 2: Factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao
 Valeria Chávez y Piero Benate
 
+
 Desde el 2020, el mundo entero se encuentra sumido en una crisis sanitaria y económica que viene exhibiendo gran parte de las desigualdades y problemas estructurales aún no resueltos por la sociedad. En ese sentido, la pandemia por COVID-19 y las medidas llevadas a cabo por el gobierno peruano para frenar sus efectos se han traducido en disposiciones que han afectado las dinámicas cotidianas de las personas. Entre estas dinámicas se encuentran las relaciones laborales, y es que, en el Perú, las cifras de desempleo estimadas establecieron que creció aproximadamente 10% en el 2020 (Agencia EFE). Esto quiere decir que problemáticas como las del desempleo se exacerban producto de la crisis pandémica, sin embargo, estas deben entenderse desde una mirada integral. Según cifras del Instituto Peruano de Economía, en el segundo trimestre del 2020, mientras que la población masculina en edad de trabajar total sufrió una variación de -35% interanual de empleo total, la población femenina en edad de trabajar sufrió una variación de -45% (IPE, 2021). Y esta viene a ser una de las tantas dimensiones mediante las cuales se puede afirmar que el golpe pandémico en el desempleo no afectó por igual a todos y todas.
 El análisis propuesto no solo va a analizar las cifras de desempleo en el contexto de la pandemia y la crisis económica, sino que partimos de la premisa de que el efecto pandémico, como cualquier fenómeno social, no afecta de forma homogénea a la sociedad. Por ello se buscará entender cómo la pandemia afecta de sobremanera a poblaciones históricamente vulnerables, siendo el desempleo una de las tantas manifestaciones de dicha desigualdad estructural. 
 En ello se fundamenta la necesidad y la importancia de este análisis, dado que la pandemia es un fenómeno aún en proceso, con un desenlace aún desconocido y con efectos que aún no pueden ser totalmente previstos en la vida de la sociedad. En ese sentido, un análisis de diversos factores que se asocian al desempleo en la región de Lima Metropolitana y Callao permite formular políticas y demás cursos de acción en beneficio de los ciudadanos y ciudadanas más afectadas por el difícil contexto actual. Como mencionan Jaramillo y Ñopo, las respuestas de política que se efectúen deben poner al centro a mujeres, pueblos indígenas y afrodescendientes (2020, p. 3).
@@ -20,111 +21,105 @@ Los factores identificados que se asocian al desempleo son, entonces, el sexo, l
 Como objetivo general, este reporte plantea la necesidad de encontrar los asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao. En ese sentido, como objetivo secundario se plantea comprobar y comparar la literatura existente en torno al tema mediante el análisis de la base de datos de la Encuesta permanente de empleo de la INEI, correspondiente a mayo - junio - julio de 2020. Asimismo, también se busca aportar un análisis de los factores detrás del desempleo en Lima Metropolitana y Callao mediante variables étnicas y culturales.
 La pregunta de investigación, en este caso, es ¿Qué factores están asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao? Como posibles hipótesis, en el marco del trimestre mayo – junio – julio de 2020, se plantea, en primer lugar, que las personas que se identifican como indígenas o afrodescendientes, o aprendieron alguna lengua originaria como lengua materna, presentan una mayor probabilidad de estar desempleadas. En segundo lugar, se plantea que, dentro de estos grupos étnicos, las mujeres presentan una mayor probabilidad de estar desempleadas. En tercer lugar, dentro de estos grupos étnicos, quienes poseen un nivel educativo más elevado presentan una mayor probabilidad de estar empleados. Finalmente, mientras menor sea la edad de la persona, mayores serán sus probabilidades de estar desempleada.
 
-Base de datos a emplear: Encuesta permanente de empleo de la INEI, correspondiente a mayo - junio - julio de 2020 
-
+Como ya se mencionó, la base de datos a emplear será de la Encuesta permanente de empleo de la INEI, correspondiente a mayo - junio - julio de 2020.
 ```{r}
 library(rio)
 data=import("Trim May-Jun-Jul20.sav")
 ```
 
+Antes de proceder con el análisis descriptivo, es necesario identificar las variables a analizar.
 
-Variables:
+## Variables:
 - Independientes: sexo (p107), edad (p108), nivel educativo (p109a), autoidentificación étnica (P224), idioma o lengua materna (P225)
-- Dependiente: si tuvo empleo o no la semana anterior (p201)
-
-((hacer subset con corte desde 14 años de edad))
+- Dependiente: si el entrevistado o entrevistada tuvo empleo o no la semana anterior (p201)
 
 ```{r}
+str(data$p107)
+str(data$p108)
+str(data$p109a)
+str(data$P224)
 str(data$P225)
-summary(data$p108)
+str(data$p201)
+```
+
+
+```{r}
+data$p107=as.factor(data$p107)
+levels(data$p107)<-c("Hombre","Mujer")
+table(data$p107)
+
+data$p109a=as.factor(data$p109a)
+levels(data$p109a)<-c("Sin_Nivel","Inicial","Primaria_Incompleta","Primaria_Completa","Secundaria_Incompleta","Secundaria_Completa","Superior_No_Universitaria_Incompleta","Superior_No_Universitaria_Completa","Superior_Universitaria_Incompleta","Superior_Universitaria_Completa","Valor_Perdido")
+table(data$p109a)
+
+data$P224=as.factor(data$P224)
+levels(data$P224)<-c("Quechua","Aymara","Nativo_o_indígena_de_la_Amazonía","Negro/Mulato/Zambo/Afro_peruano","Blanco","Mestizo","Otro","No_sabe")
+table(data$P224)
+
+data$p225=as.factor(data$P225)
+levels(data$P225)<-c("Quechua","Aymara","Otra_lengua_nativa","Castellano","Portugués","Otra_lengua_extranjera","Es_Sordo_Mudo(a)/Muda(a)","Lenguaje_de_señas_peruanas")
+table(data$P225)
+
+data$p201=as.factor(data$p201)
+levels(data$p201)<-c("Si","No")
 table(data$p201)
 ```
 
 
+Como fue mencionado anteriormente, el Perú sigue los lineamientos de la OIT para la Población en edad de trabajar (PET), por lo que en el país se considera que a partir de los 14 años una persona ya pertenece a la PET. Por ello, es necesario editar la variable edad en la base de datos, para que elimine valores menores a 14.
 
 ```{r}
-table(data$P224)
-table(data$P225)
+data2=subset(data,p108>=14)
+```
+
+
+
+##Análisis descriptivo (medidas de tendencia central y de dispersión)
+
+- nivel educativo (p109a)
+Se hará un gráfico de barras para visualizar la distribución de la población (a partir de los 14 años) según su nivel de estudios
+```{r}
+grafico1=table(data2$p109a)
+barplot(grafico1,
+    col = terrain.colors(11),
+    main="Distribución de la población en edad empleable según su nivel de estudios",
+    xlab = "Nivel de educación",          
+    ylab = "Cantidad de personas",
+    legend.text = c("Sin Nivel","Inicial","Primaria Incompleta","Primaria Completa","Secundaria Incompleta","Secundaria Completa","Superior No Universitaria Incompleta","Superior No Universitaria Completa","Superior Universitaria Incompleta","Superior Universitaria Completa","Valor Perdido"), 
+    args.legend = list(x = "topright", cex = 0.6, inset = c(-0.05,0)))
+```
+Como se puede apreciar en el gráfico, la mayor parte de la población en edad de trabajar posee el nivel educativo de secundaria completa. La diferencia es muy grande a comparación de cualquier otro nivel educativo, como muestra el gráfico. En ese sentido, a nivel muestral se evidencia que en Lima Metropolitana y Callao la mayor parte de la PET tiene un nivel educativo de secundaria completa, seguido, con mucha diferencia, por el nivel de secundaria completa y superior universitaria incompleta, que poseen valores muy similares. Un hecho que resalta es que es mayor la población sin nivel educativo que aquella que solo posee el nivel inicial, lo que da indicios de que, una vez una persona empieza el proceso educativo, es muy improbable que se quede en el nivel inicial.
+
+
+- edad (p108)
+La variable edad es la única variable numérica del conjunto de variables (independientes y dependiente) que se posee. Por ello, sí es posible calcular los estadísticos descriptivos y de dispersión de dicha variable
+
+```{r}
+summary(data2$p108)
+library("RcmdrMisc")
+numSummary(data2$p108, statistics=c("mean", "sd", "IQR", "quantiles","cv", "skewness", "kurtosis"), type=c("2", "1", "3"), 
+           quantiles=c(0, .25, .5, .75, 1))
+```
+Los estadísticos nos muestran que hay una media muestral de 42.08 años. El valor mínimo de la variable es 14 años, dado que desde dicha edad comienza la PET, y el valor máximo es de 98. La desviación estándar, por su parte, es de 18.67, un valor relativamente a comparación de la media, lo que muestra que los datos se encuentran dispersos. Respecto a la asimetría, esta posee un valor mayor que 0 (0.36), lo que evidencia una tendencia o agrupamiento de los datos hacia los valores inferiores del conjunto de datos. Asimismo, la curtosis es menor a 0 (-0.75), lo que evidencia que la distribución es platicúrtica y, por ende, es pequeña la concentración de los valores en torno al centro de la distribución.
+
+
+- edad (p108) y empleo o no (p201)
+para finalizar el análisis descriptivo, se analizará la relación entre la variable edad y si el entrevistado o entrevistada poseía empleo o no la semana anterior.
+
+```{r}
+library(wesanderson)
 ```
 
 ```{r}
-
+boxplot(data2$p108~data2$p201, main = "Edad según si la semana pasada tuvo algún empleo", 
+     xlab = "Empleado la semana anterior", ylab = "Edad", 
+     col = wes_palette("GrandBudapest2"))
 ```
+Como se puede apreciar en el gráfico, la mediana de edad, tanto para la población empleada como para la población no empleada, es de 40 o un valor muy cercano a esta cantidad. Además, la caja de la población no empleada es más gruesa que la de la población que sí lo está, lo que muestra un mayor rango intercuartil para los valores correspondientes a la población desempleada. Esto implica que existen más valores agrupados más allá de la mediana, a comparación de la población empleada. Del mismo modo, mientras en el gráfico de la población empleada se observa cierta equidistancia entre la caja y los límites, en la caja de la población desempleada se observa una tendencia hacia el límite inferior, lo que indica que hay un gran conjunto de datos agrupados en torno a los valores inferiores de la distribución. Un esbozo del análisis que se puede hacer a esto indicaría que es más difícil para las personas con menos edad conseguir trabajo. Finalmente, algo relevante que se puede extraer de este gráfico es también la diferencia entre los límites superiores de ambas cajas. Mientras que el límite superior de la caja de la población empleada es apróximadamente 80 años, el límite superior de la caja de la población no empleada es cercana a 100 (exactamente 98 si se consideran los estadísticos hallados anteriormente). Entonces, esta diferencia nos da indicios de que, por alguna razón, es improbable que la población mayor a 80 años se encuentre empleada en la región de Lima Metropolitana y Callao.
 
 
-
-
-
-
-
-Análisis descriptivo (medidas de tendencia central y de dispersión)
-
-Posibles pruebas estadísticas a utilizar para responder a pregunta de investigación: modelo de regresión logística binaria
-
-
-SEXO Y EMPLEO O NO
-##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
-```{r echo=FALSE}
-Tabla1=describeBy(data1$ln.gross, data1$party)
-Tabla1
-```
-
-##### ***Boxplot de la riqueza acumulada bruta antes del fallecimiento del MP según el partido político de procedencia***
-```{r echo=FALSE}
-boxplot(data1$ln.gross~data1$party, xlab = "Partidos Políticos", ylab = "Logaritmo transformado de riqueza acumulada Bruta al momento de fallecer", col = c("green", "red"))
-```
-
-
-##### ***Gráfico de diferencia de medias de la riqueza acumulada bruta según los partidos políticos***
-```{r echo=FALSE}
-plotmeans(data1$ln.gross~data1$party, xlab = "Partidos Políticos", ylab = "Logaritmo de riqueza acumulada bruta")
-```
-
-
-
-EDAD Y EMPLEO O NO
-##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
-```{r echo=FALSE}
-Tabla1=describeBy(data1$ln.gross, data1$party)
-Tabla1
-```
-
-((O SOLO HAGO SUMMARY DE EDAD?))
-
-
-NIVEL EDUCATIVO Y EMPLEO O NO
-##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
-```{r echo=FALSE}
-Tabla1=describeBy(data1$ln.gross, data1$party)
-Tabla1
-```
-
-
-AUTOIDENTIFICACIÓN ÉTNICA Y EMPLEO O NO
-##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
-```{r echo=FALSE}
-Tabla1=describeBy(data1$ln.gross, data1$party)
-Tabla1
-```
-
-
-LENGUA MATERNA Y EMPLEO O NO
-##### Tabla de medidas de tendencia central y dispersión del logaritmo transformado de la riqueza bruta acumulada antes del fallecimiento según el partido político de procedencia
-```{r echo=FALSE}
-Tabla1=describeBy(data1$ln.gross, data1$party)
-Tabla1
-```
-
-
-
-
-
-((prueba t entre edad y empleo o no??))
-
-((prueba chi2 entre sexo, nivel educativo, autoidentificación étnica, lengua materna y empleo o no???))
-
-
-
+##Posibles pruebas estadísticas a utilizar para responder a pregunta de investigación:
+- modelo de regresión logística binaria, dado que variable dependiente es dicotómica (el entrevistado o entrevistada tuvo trabajo la semana anterior o no)
 
 
 
@@ -136,13 +131,4 @@ Bibliografía:
 •	Instituto Nacional de Estadística e Informática. (2021). Situación del Mercado Laboral en Lima Metropolitana (N° 8 - Agosto 2021)
 •	Instituto Peruano de Economía. (2021, 4 de enero). En busca del empleo perdido. El Comercio. 
 •	Instituto Peruano de Economía. (2020). MERCADO LABORAL PERUANO: IMPACTO POR COVID-19 Y RECOMENDACIONES DE POLÍTICA. Instituto Peruano de Economía en colaboración con la Organización Internacional del Trabajo y la Confederación Nacional de Instituciones Empresariales Privadas.
-
-
-
-
-
-
-
-
-
 
