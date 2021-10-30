@@ -1,6 +1,6 @@
 ---
 title: "Chavez_Benate_AVANCE 2"
-author: "Piero Benate"
+author: "Valeria Chávez y Piero Benate"
 date: "24/10/2021"
 output: html_document
 ---
