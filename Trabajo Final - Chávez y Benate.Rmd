@@ -1,0 +1,213 @@
+---
+title: "Trabajo Final"
+author: "Valeria Chávez y Piero Benate"
+date: "24/10/2021"
+output:
+  rmdformats::downcute:
+  code_folding: show
+  self_contained: true
+  thumbnails: false
+  lightbox: true
+pkgdown:
+  as_is: true
+---
+
+# AVANCE 2: Factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao
+**Valeria Chávez y Piero Benate**
+
+## Introducción:
+
+Desde el 2020, el mundo se encuentra sumido en una crisis sanitaria y económica que viene exhibiendo gran parte de las desigualdades y problemas estructurales aún no resueltos por la sociedad. En ese sentido, la pandemia por COVID-19 y las medidas llevadas a cabo por el gobierno peruano para frenar sus efectos se han traducido en disposiciones que han afectado las dinámicas cotidianas de las personas. Entre estas dinámicas se encuentran las relaciones laborales, y es que, en el Perú, las cifras de desempleo estimadas establecieron que creció aproximadamente 10% en el 2020 (Agencia EFE). Esto quiere decir que problemáticas como las del desempleo se exacerban producto de la crisis pandémica, sin embargo, estas deben entenderse desde una mirada integral. Según cifras del Instituto Peruano de Economía, en el segundo trimestre del 2020, mientras que la población masculina en edad de trabajar total sufrió una variación de -35% interanual de empleo total, la población femenina en edad de trabajar sufrió una variación de -45% (IPE, 2021). Y esta viene a ser una de las tantas dimensiones mediante las cuales se puede afirmar que el golpe pandémico en el desempleo no afectó por igual a todos y todas.
+El análisis propuesto no se centra solo en las cifras de desempleo en el contexto de la pandemia y la crisis económica, sino que se parte de la premisa de que el efecto pandémico, como cualquier fenómeno social, no afecta de forma homogénea a la sociedad. Por ello se buscará entender cómo la pandemia afecta de sobremanera a poblaciones históricamente vulnerables, siendo el desempleo una de las tantas manifestaciones de dicha desigualdad estructural. En ello se fundamenta la necesidad y la importancia del análisis, dado que la pandemia es un fenómeno aún en proceso, con un desenlace aún desconocido y con efectos que aún no pueden ser totalmente previstos en la vida de la sociedad. En ese sentido, un análisis de diversos factores que se asocian al desempleo en la región de Lima Metropolitana y Callao permite formular políticas y demás cursos de acción en beneficio de los ciudadanos y ciudadanas más afectadas por el difícil contexto actual.
+Como mencionan Jaramillo y Ñopo, las respuestas de política ante la crisis pandémica deben poner al centro a mujeres, pueblos indígenas y afrodescendientes (2020, p. 3). Respecto al desempleo en el caso de las mujeres peruanas, Huamán encuentra que las tasas de desempleo han sido históricamente mayores para las mujeres, y que la pandemia tiene un efecto en ello (2021, p. 38). Esto coincide con lo que fue mencionado anteriormente, a lo cual se le puede añadir la gran cantidad de estudios e informes que encuentran desigualdades en la pérdida del empleo desde un análisis de otras variables. El IPE, por ejemplo, recolectó información que permite afirmar que la pérdida de labor se incrementa en la Población en Edad de Trabajar (PET) más joven (en el Perú, siguiendo lo establecido por la Organización Internacional del Trabajo (OIT), se considera a la PET desde los 14 años) y en la población que posee educación superior pero no universitaria (2021). La literatura que se encuentra sobre el tema del desempleo, sin embargo, suele omitir variables étnicas o culturales, como el lenguaje. En ese sentido, el presente trabajo también busca contribuir al análisis y a la literatura en torno a la problemática en cuestión mediante el análisis de estas variables que se han dejado de lado, como la autoidentificación étnica o la lengua materna. De esta manera es que se proporciona evidencia que sustente líneas de acción política que incluya también a estos grupos.
+El contexto peruano, sin embargo, no difiere mucho del contexto regional. Como apuntó la OIT en su momento, América Latina es la región con la mayor cantidad de empleos perdidos por el efecto pandémico (France 24). Este efecto se reproduce, evidentemente, siguiendo las propias particularidades y contextos propios de cada país. Sin embargo, son resaltantes los patrones que se pueden observar que guardan similitud con el caso peruano. En el caso ecuatoriano, por ejemplo, la tasa de desempleo fue mayor para las mujeres, con 15,7%, que para los hombres, con 11,6% (Zavala et al., 2021). Del mismo modo, resalta el análisis elaborado por Mora, en donde se estudia el efecto del confinamiento en el desempleo en la ciudad de Cali, la cual posee una tasa de informalidad mayor al 50%, como Lima. El autor encuentra que es justamente la población más joven la que tiene mayores probabilidades de permanecer en el desempleo en el contexto de las restricciones por la pandemia por COVID-19 (2021). Como se mencionó, los patrones son similares y es que, como afirma la misma OIT, ni en la región ni en el mundo se va a producir un shock pandémico que afecte de forma homogénea a todos los trabajadores y trabajadoras (2020). He ahí la importancia de analizar la particularidad de cada contexto.
+En ese sentido, los factores identificados que se asocian al desempleo son, entonces, el sexo, la edad, el nivel educativo, la autoidentificación étnica y el idioma o la lengua materna. Ello será analizado mediante la base de datos de la Encuesta permanente de empleo del Instituto Nacional de Estadística e Informática (INEI), correspondiente a mayo - junio - julio de 2020. Se eligió este período de tiempo ya que el IPE identifica que es en el segundo trimestre del año en donde se presenta una mayor variación negativa del empleo en cuanto al trimestre del año anterior (2020, p. 5).
+Como objetivo general, este reporte plantea la necesidad de encontrar los factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao. En ese sentido, como objetivo secundario se plantea comprobar y comparar la literatura existente en torno al tema mediante el análisis de la base de datos de la Encuesta permanente de empleo de la INEI, correspondiente a mayo - junio - julio de 2020. Asimismo, también se busca aportar un análisis de los factores detrás del desempleo en Lima Metropolitana y Callao mediante variables étnicas y culturales. La pregunta de investigación, en este caso, es ¿Qué factores están asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao? Como posibles hipótesis, en el marco del trimestre mayo – junio – julio de 2020, se plantea, en primer lugar, que las personas que se identifican como indígenas o afrodescendientes, o aprendieron alguna lengua originaria como lengua materna, presentan una mayor probabilidad de estar desempleadas. En segundo lugar, se plantea que, dentro de estos grupos étnicos, las mujeres presentan una mayor probabilidad de estar desempleadas. En tercer lugar, dentro de estos grupos étnicos, quienes poseen un nivel educativo más elevado presentan una mayor probabilidad de estar empleados. Finalmente, mientras menor sea la edad de la persona, mayores serán sus probabilidades de estar desempleada.
+
+
+Como ya se mencionó, la base de datos a emplear será de la Encuesta permanente de empleo de la 
+INEI, correspondiente a mayo - junio - julio de 2020.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(rmdformats)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = FALSE)
+```
+
+
+```{r, include=FALSE}
+library("rio")
+library("tidyverse")
+library("ggplot2")
+library("dplyr")
+library("knitr")
+library("rmarkdown")
+library("treemapify")
+library(cluster)
+library(factoextra)
+library(NbClust)
+library(tidyr)
+library(wesanderson)
+```
+
+```{r, include=FALSE}
+data=import("https://github.com/pierobenate/Trabajo-grupal-Estad-stica-2---Ch-vez-y-Benate-/raw/a61b132bf2e7144c900e5426105b180471a2e256/Trim%20May-Jun-Jul20.sav")
+names(data)
+```
+
+Antes de proceder con el análisis descriptivo, es necesario identificar las variables a analizar.
+
+# Elección de variables:
+* Independientes: sexo (p107), edad (p108), nivel educativo (p109a), autoidentificación étnica (P224), idioma o lengua materna (P225)
+* Dependiente: si el entrevistado o entrevistada tuvo empleo o no la semana anterior (p201)
+
+```{r, include=FALSE}
+str(data$p107)
+str(data$p108)
+str(data$p109a)
+str(data$P224)
+str(data$P225)
+str(data$p201)
+```
+
+
+```{r, include=FALSE}
+data$p107=as.factor(data$p107)
+levels(data$p107)<-c("Hombre","Mujer")
+table(data$p107)
+
+data$p109a=as.factor(data$p109a)
+levels(data$p109a)<-c("Sin_Nivel","Inicial","Primaria_Incompleta","Primaria_Completa","Secundaria_Incompleta","Secundaria_Completa","Superior_No_Universitaria_Incompleta","Superior_No_Universitaria_Completa","Superior_Universitaria_Incompleta","Superior_Universitaria_Completa","Valor_Perdido")
+table(data$p109a)
+
+data$P224=as.factor(data$P224)
+levels(data$P224)<-c("Quechua","Aymara","Nativo_o_indígena_de_la_Amazonía","Negro/Mulato/Zambo/Afro_peruano","Blanco","Mestizo","Otro","No_sabe")
+table(data$P224)
+
+data$P225=as.factor(data$P225)
+levels(data$P225)<-c("Quechua","Aymara","Otra_lengua_nativa","Castellano","Portugués","Otra_lengua_extranjera","Es_Sordo_Mudo(a)/Muda(a)","Lenguaje_de_señas_peruanas")
+table(data$P225)
+
+data$p201=as.factor(data$p201)
+levels(data$p201)<-c("Si","No")
+table(data$p201)
+```
+
+
+Como fue mencionado anteriormente, el Perú sigue los lineamientos de la OIT para la Población en edad de trabajar (PET), por lo que en el país se considera que a partir de los 14 años una persona ya pertenece a la PET. Por ello, es necesario editar la variable edad en la base de datos, para que elimine valores menores a 14.
+
+```{r, include=FALSE}
+data2=subset(data,p108>=14)
+```
+
+
+
+## Análisis descriptivo (medidas de tendencia central y de dispersión)
+
+**- nivel educativo (p109a)**
+Se hará un gráfico de barras para visualizar la distribución de la población (a partir de los 14 años) según su nivel de estudios
+
+```{r}
+grafico1=table(data2$p109a)
+barplot(grafico1,
+    col = terrain.colors(11),
+    main="Distribución de la población en edad empleable según su nivel de estudios",
+    xlab = "Nivel de educación",          
+    ylab = "Cantidad de personas",
+    legend.text = c("Sin Nivel","Inicial","Primaria Incompleta","Primaria Completa","Secundaria Incompleta","Secundaria Completa","Superior No Universitaria Incompleta","Superior No Universitaria Completa","Superior Universitaria Incompleta","Superior Universitaria Completa","Valor Perdido"), 
+    args.legend = list(x = "topright", cex = 0.6, inset = c(-0.05,0)))
+```
+
+Como se puede apreciar en el gráfico, la mayor parte de la población en edad de trabajar posee el nivel educativo de secundaria completa. La diferencia es muy grande a comparación de cualquier otro nivel educativo, como muestra el gráfico. En ese sentido, a nivel muestral se evidencia que en Lima Metropolitana y Callao la mayor parte de la PET tiene un nivel educativo de secundaria completa, seguido, con mucha diferencia, por el nivel de secundaria completa y superior universitaria incompleta, que poseen valores muy similares. Un hecho que resalta es que es mayor la población sin nivel educativo que aquella que solo posee el nivel inicial, lo que da indicios de que, una vez una persona empieza el proceso educativo, es muy improbable que se quede en el nivel inicial.
+
+
+**- edad (p108)**
+La variable edad es la única variable numérica del conjunto de variables (independientes y dependiente) que se posee. Por ello, sí es posible calcular los estadísticos descriptivos y de dispersión de dicha variable
+
+```{r}
+summary(data2$p108)
+library("RcmdrMisc")
+numSummary(data2$p108, statistics=c("mean", "sd", "IQR", "quantiles","cv", "skewness", "kurtosis"), type=c("2", "1", "3"), 
+           quantiles=c(0, .25, .5, .75, 1))
+```
+
+Los estadísticos nos muestran que hay una media muestral de 42.08 años. El valor mínimo de la variable es 14 años, dado que desde dicha edad comienza la PET, y el valor máximo es de 98. La desviación estándar, por su parte, es de 18.67, un valor relativamente a comparación de la media, lo que muestra que los datos se encuentran dispersos. Respecto a la asimetría, esta posee un valor mayor que 0 (0.36), lo que evidencia una tendencia o agrupamiento de los datos hacia los valores inferiores del conjunto de datos. Asimismo, la curtosis es menor a 0 (-0.75), lo que evidencia que la distribución es platicúrtica y, por ende, es pequeña la concentración de los valores en torno al centro de la distribución.
+
+
+**- edad (p108) y empleo o no (p201)**
+para finalizar el análisis descriptivo, se analizará la relación entre la variable edad y si el entrevistado o entrevistada poseía empleo o no la semana anterior.
+
+
+```{r}
+boxplot(data2$p108~data2$p201, main = "Edad según si la semana pasada tuvo algún empleo", 
+     xlab = "Empleado la semana anterior", ylab = "Edad", 
+     col = wes_palette("GrandBudapest2"))
+```
+
+Como se puede apreciar en el gráfico, la mediana de edad, tanto para la población empleada como para la población no empleada, es de 40 o un valor muy cercano a esta cantidad. Además, la caja de la población no empleada es más gruesa que la de la población que sí lo está, lo que muestra un mayor rango intercuartil para los valores correspondientes a la población desempleada. Esto implica que existen más valores agrupados más allá de la mediana, a comparación de la población empleada. Del mismo modo, mientras en el gráfico de la población empleada se observa cierta equidistancia entre la caja y los límites, en la caja de la población desempleada se observa una tendencia hacia el límite inferior, lo que indica que hay un gran conjunto de datos agrupados en torno a los valores inferiores de la distribución. Un esbozo del análisis que se puede hacer a esto indicaría que es más difícil para las personas con menos edad conseguir trabajo. Finalmente, algo relevante que se puede extraer de este gráfico es también la diferencia entre los límites superiores de ambas cajas. Mientras que el límite superior de la caja de la población empleada es apróximadamente 80 años, el límite superior de la caja de la población no empleada es cercana a 100 (exactamente 98 si se consideran los estadísticos hallados anteriormente). Entonces, esta diferencia nos da indicios de que, por alguna razón, es improbable que la población mayor a 80 años se encuentre empleada en la región de Lima Metropolitana y Callao.
+
+
+## Posibles pruebas estadísticas a utilizar para responder a pregunta de investigación:
+- modelo de regresión logística binaria, dado que variable dependiente es dicotómica (el entrevistado o entrevistada tuvo trabajo la semana anterior o no)
+
+
+# Metodología:
+
+El estudio a llevarse a cabo se enfoca en el efecto que las variables predictoras mencionadas (sexo, edad, nivel educativo, autoidentificación étnica e idioma o lengua materna) tienen en una variable dependiente, en este caso: si una persona poseía empleo la semana anterior o no. De esta forma es que se puede analizar la asociación que tienen los factores mencionados con respecto al desempleo, respondiendo así la pregunta de investigación. Para ello, se harán pruebas estadísticas descriptivas y se dispondrán de gráficos que permitan interpretar a las variables y su relación entre sí a nivel descriptivo. En este sentido, por la naturaleza de las variables, no es posible agruparlas ya que es importantes considerarlas por separado. Posteriormente, se empleará una técnica de reducción de dimensiones para simplificar la información proporcionada por la base de datos de forma que esta nueva información se emplee en un modelo de regresión logística binaria. Este modelo de regresión en específico se escoge sobre la base de que la variable dependiente es de una clasificación dicotómica, siendo solo dos los posibles valores que se pueden obtener de esta. En ese sentido, un modelo de regresión logística binaria permite predecir o encontrar la probabilidad de que ocurra cierto evento o no en base a las variables propuestas. De esta forma, mediante los factores mencionados anteriormente es que se hallará la probabilidad de que una persona en el AMLC posea un empleo la semana anterior o no, dentro del período de mayo - junio - julio de 2020. 
+Para ello, se empleará un tipo de diseño no experimental, específicamente, uno transversal y correlacional-causal. Este diseño permite evaluar las variables y su correlación en un mismo instante en el tiempo, por lo que no se considera establecer una relación temporal entre dichas variables sino, una relación en un preciso momento temporal. Para que esto se lleve a cabo, fue necesario un proceso de recolección de información en su momento llevado a cabo por la INEI. Este proceso de recolección de información se materializó en la mencionada Encuesta permanente de empleo de la INEI, correspondiente al período de mayo - junio - julio de 2020. Esta encuesta se lleva a cabo de forma mensual desde marzo de 2001 y, con respectivas modificaciones desde entonces. Para el período a analizar, la población objetivo estaba compuesta por los ocupantes de viviendas particulares del Área Metropolitana de Lima y Callao (AMLC), por lo que se dispuso de una muestra de 4800 viviendas dentro de esta. Por su parte, el tipo de muestreo es probabilístico y bietápico, además de implícitamente estratificada debido a que previamente se dividió a la población mediante estratos socioeconómicos en aras de obtener una mayor representatividad (INEI, 2020).
+Como instrumento de medición, se condujo una Encuesta de Derecho, en donde la población del estudio, se componía de todas las personas que residen en las viviendas del AMLC. Por ello, dentro de la muestra de 4800 viviendas se aplicaba el cuestionario a cada residente dentro de dichas viviendas. El objetivo del cuestionario era, en ese sentido, recolectar información sobre el empleo y el ingreso en el AMLC, compuesta por 46 distritos en la Provincia de Lima y 6 en la Provincia Constitucional del Callao. Entre lo recabado y registrado en la base de datos se encuentra información básica sobre los miembros del hogar, su empleo y sus ingresos, si poseen o no un seguro de salud y de qué tipo, su etnicidad, si poseen alguna discapacidad, su idioma o lengua materna, entre otros.
+
+
+# Hallazgos:
+
+## Creación del modelo:
+
+```{r}
+modelo1 = glm(p201 ~ p107 + p108 + p109a + P224 + P225, family = binomial(link="logit") ,data = data2)
+summary(modelo1)
+```
+
+
+
+
+
+
+## Análisis del modelo:
+
+
+
+
+
+
+# Link del repositorio en GitHub:
+https://github.com/pierobenate/Trabajo-grupal-Estad-stica-2---Ch-vez-y-Benate-.git
+
+
+# Bibliografía:
+
+•	Agencia EFE. (16 de noviembre de 2020). El desempleo en Perú creció el 9,6 % entre julio y septiembre por la covid-19. https://www.efe.com/efe/america/economia/el-desempleo-en-peru-crecio-9-6-entre-julio-y-septiembre-por-la-covid-19/20000011-4395700
+
+• France 24. (2 de julio de 2020). OIT: América Latina es la región con más empleos perdidos por cuenta de la pandemia. https://www.france24.com/es/20200701-oit-latinoamerica-desempleo-economia-pandemia-covid19
+
+•	Huamán, Jackeline. (2021). Impacto económico y social de la COVID-19 en el Perú. Revista de Ciencia e Investigación en Defensa-CAEN. Vol 2, Núm 1. (pp. 31-42). 
+
+•	Instituto Nacional de Estadística e Informática. (2020). Encuesta permanente de empleo de la INEI, correspondiente mayo - junio- julio 2020. Dirección Técnica de Demografía e Indicadores Sociales.
+
+•	Instituto Nacional de Estadística e Informática. (2021). Situación del Mercado Laboral en Lima Metropolitana (N° 8 - Agosto 2021)
+
+•	Instituto Peruano de Economía. (2021, 4 de enero). En busca del empleo perdido. El Comercio.
+
+•	Instituto Peruano de Economía. (2020). MERCADO LABORAL PERUANO: IMPACTO POR COVID-19 Y RECOMENDACIONES DE POLÍTICA. Instituto Peruano de Economía en colaboración con la Organización Internacional del Trabajo y la Confederación Nacional de Instituciones Empresariales Privadas.
+
+•	Jaramillo, Miguel. Ñopo, Hugo. (2020). Covid-19 y el shock externo: Impactos económicos y opciones de política en el Perú. Programa de las Naciones Unidas para el Desarrollo. COVID-19 Serie de Documentos de Política Pública: Propuestas de soluciones para la crisis. N° 5.
+
+• Mora, Jhon. (2021). Análisis del desempleo y la ocupación después de una política estricta de confinamiento por COVID-19 en Cali. Lecturas De Economía, (94), 165–193. https://doi.org/10.17533/udea.le.n94a342002 
+
+• Organización Internacional del Trabajo. (2020). Impactos en el mercado de trabajo y los ingresos en América Latina y el Caribe. Panorama Laboral en tiempos de la COVID-19. Panorama Laboral 2020.
+
+• Zavala, Sorayda, Ventura, Laura, Parrales, Katty y Parrales, María. (2021). El desempleo: factor concluyente en la emergencia sanitaria por covid-19 en el Ecuador. Revista Publicando, 8(31), 128-141. https://doi.org/10.51528/rp.vol8.id2239  
+
+
+
