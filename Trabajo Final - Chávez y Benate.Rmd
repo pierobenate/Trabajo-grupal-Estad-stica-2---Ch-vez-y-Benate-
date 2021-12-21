@@ -12,10 +12,10 @@ pkgdown:
   as_is: true
 ---
 
-# AVANCE 2: Factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao
+# TRABAJO FINAL: Factores asociados al desempleo en el contexto de la pandemia por COVID-19 en Lima Metropolitana y Callao
 **Valeria Chávez y Piero Benate**
 
-## Introducción:
+# Introducción:
 
 Desde el 2020, el mundo se encuentra sumido en una crisis sanitaria y económica que viene exhibiendo gran parte de las desigualdades y problemas estructurales aún no resueltos por la sociedad. En ese sentido, la pandemia por COVID-19 y las medidas llevadas a cabo por el gobierno peruano para frenar sus efectos se han traducido en disposiciones que han afectado las dinámicas cotidianas de las personas. Entre estas dinámicas se encuentran las relaciones laborales, y es que, en el Perú, las cifras de desempleo estimadas establecieron que creció aproximadamente 10% en el 2020 (Agencia EFE). Esto quiere decir que problemáticas como las del desempleo se exacerban producto de la crisis pandémica, sin embargo, estas deben entenderse desde una mirada integral. Según cifras del Instituto Peruano de Economía, en el segundo trimestre del 2020, mientras que la población masculina en edad de trabajar total sufrió una variación de -35% interanual de empleo total, la población femenina en edad de trabajar sufrió una variación de -45% (IPE, 2021). Y esta viene a ser una de las tantas dimensiones mediante las cuales se puede afirmar que el golpe pandémico en el desempleo no afectó por igual a todos y todas.
 El análisis propuesto no se centra solo en las cifras de desempleo en el contexto de la pandemia y la crisis económica, sino que se parte de la premisa de que el efecto pandémico, como cualquier fenómeno social, no afecta de forma homogénea a la sociedad. Por ello se buscará entender cómo la pandemia afecta de sobremanera a poblaciones históricamente vulnerables, siendo el desempleo una de las tantas manifestaciones de dicha desigualdad estructural. En ello se fundamenta la necesidad y la importancia del análisis, dado que la pandemia es un fenómeno aún en proceso, con un desenlace aún desconocido y con efectos que aún no pueden ser totalmente previstos en la vida de la sociedad. En ese sentido, un análisis de diversos factores que se asocian al desempleo en la región de Lima Metropolitana y Callao permite formular políticas y demás cursos de acción en beneficio de los ciudadanos y ciudadanas más afectadas por el difícil contexto actual.
@@ -72,7 +72,7 @@ str(data$P225)
 str(data$p201)
 ```
 
-
+Se recodifican las variables pertinentes, configurando como categóricas aquellas que predeterminadamente venían configuradas como numéricas. La variable dependiente, p201, es recodificada para que adopte valores de 0 y 1, para posteriormente ser codificada como una dicotómica con los valores de "sí" y "no", respectivamente. En ese sentido, el no haber tenido un empleo la semana anterior es el evento de interés que será analizado posteriormente mediante el modelo de regresión logística binaria.
 ```{r, include=FALSE}
 data$p107=as.factor(data$p107)
 levels(data$p107)<-c("Hombre","Mujer")
@@ -90,6 +90,7 @@ data$P225=as.factor(data$P225)
 levels(data$P225)<-c("Quechua","Aymara","Otra_lengua_nativa","Castellano","Portugués","Otra_lengua_extranjera","Es_Sordo_Mudo(a)/Muda(a)","Lenguaje_de_señas_peruanas")
 table(data$P225)
 
+data$p201=recode(data$p201, "1=0 ; 2=1")
 data$p201=as.factor(data$p201)
 levels(data$p201)<-c("Si","No")
 table(data$p201)
@@ -168,16 +169,73 @@ Como instrumento de medición, se condujo una Encuesta de Derecho, en donde la p
 modelo1 = glm(p201 ~ p107 + p108 + p109a + P224 + P225, family = binomial(link="logit") ,data = data2)
 summary(modelo1)
 ```
+H0: modelo no es válido//variables no aportan al modelo
 
+Se observa que el p valor del intercepto es menor a 0.05. Por ello, con este p valor de 0.0000289 se afirma que este primer modelo es válido. Sin embargo, se observan varias variables que no llegan a ser significativas en cuanto a su aporte al modelo porque sus p valores son mayores a 0.05.
+Se procede a retirar estas variables y construir un nuevo modelo:
 
+```{r, include=FALSE}
+data3=subset(data2, p109a!="Inicial")
+```
 
+```{r, include=FALSE}
+data4=subset(data3, p109a!="Valor_Perdido")
+```
 
+```{r, include=FALSE}
+data5=subset(data4, P225!="Aymara")
+data6=subset(data5, P225!="Otra_lengua_nativa")
+data7=subset(data6, P225!="Portugués")
+data8=subset(data7, P225!="Otra_lengua_extranjera") 
+data9=subset(data8, P225!="Es_Sordo_Mudo(a)/Muda(a)")
+```
+
+```{r}
+modelo2 = glm(p201 ~ p107 + p108 + p109a + P225, family = binomial(link="logit") ,data = data9)
+summary(modelo2)
+```
+H0: modelo no es válido//variables no aportan al modelo
+
+El p valor del intercepto es 0.000478, mucho menor a 0.05. Por ello, el modelo es válido. Del mismo modo, todas las variables poseen un p valor menor a 0.05, por lo que se comprueba que aportan al modelo propuesto y se acepta la hipótesis alternativa.
 
 
 ## Análisis del modelo:
 
+Para saber, por su parte, cuánto explica el modelo respecto a la variabilidad de la variable dependiente, se calculará el pseudo R2.
 
+Pseudo R2 cuadrado: 1-(residual deviance/null deviance)
+```{r, include=FALSE}
+1-(14300/15205)
+```
+Se multiplica el Pseudo R2 cuadrado para obtener el valor de cuánto explica el modelo propuesto:
+```{r, include=FALSE}
+0.05951989*100
+```
+Como suele ser usual en este tipo de modelos, el modelo explica menos del 10% de la variabilidad de la variable dependiente. En este caso, esto es 5.95%. Por ende, a pesar de que las variables propuestas sí tienen un efecto en la variable dependiente, dicho efecto no aportaría en demasía a la explicación de si una persona poseía empleo la semana anterior o no. En ese sentido, es necesario considerar el rol que pueden tener otras variables al respecto. Sobre este punto se abordará más en las conclusiones de la investigación.
 
+Para conocer el efecto de las variables independientes en la variable dependiente, se calculan los exponenciales de los coeficientes de estas variables.
+```{r, include=FALSE}
+exp(coef(modelo2))
+```
+Como muestran los resultados de las exponenciales, ser mujer incrementa en 1.756, o 75.56% las probabilidades de no haber poseído un empleo la semana anterior.
+Por otro lado, conforme la edad de una persona en el Área Metropolitana de Lima y Callao aumenta en una unidad, sus posibilidades de estar desempleada la semana anterior aumentan en 0.79%.
+Por su parte, poseer un nivel educativo primario incompleto disminuye las probabilidades de estar desempleado la semana anterior en un 49.84%. Tener primaria completa, por su parte, disminuye dichas probabilidades en un 59.70%. 
+La obtención de un nivel educativo secundario incompleto, por otro lado, disminuye dichas probabilidades de desempleo en un 44.03%. El nivel secundario, pero completo, tiene el mismo efecto pero con un 74.21% de probabilidad.
+Por su parte, poseer una educación superior no universitaria incompleta también reduce las probabilidades de no haber poseído un trabajo la semana anterior, pero en un 74.98%. Poseer de forma completa dicho nivel educativo, sin embargo, lo hace en un 85.82%.
+En cuanto al nivel educativo de educación superior universitaria, poseer dicho nivel de forma incompleta reduce las probabilidades de haber estado desempleado la semana anterior en un 68.52%. Mientras que poseer dicho nivel de forma completa tiene el mismo efecto pero con un abrumador 90.27%.
+Finalmente, tener como lengua materna el castellano tiene el efecto contrario, aumentando las probabilidades de haber estado desempleado la semana anterior en un 32.76%.
+
+En línea con las hipótesis, a pesar que  el  modelo con las variables de autoidentificación étnica y del lenguaje originario fue significativa, dichas variables en específico no aportaban al modelo. Es por ello que no podemos confirmar nuestra primera hipótesis respecto a que, las personas que se identifican como indígenas o afrodescendientes o que una lengua originaria sea su lengua materna presenten una mayor probabilidad de estar desempleadas. A pesar de ello, se planteó que las mujeres tendrían mayores posibilidades de encontrarse desempleadas a no estarlo. Por los resultados del modelo, es posible afiramar que esta hipótesis se cumple. Además de ello, los niveles educativos más avanzados presentan, por lo general, mayores posibilidades de encontrarse empleado la semana anterior a la encuesta, afirmando la tercera hipótesis. Po último, respecto a que mediante avance la edad del encuestado, hay más posibilidad de encontrarse desempleado, hemos podido hallar que mientras aumente en un año la edad, sus posibilidades de estar desempleada la semana anterior aumentan en 0.79%.
+
+# Conclusiones:
+
+En conclusión, hemos podido observar que de las cuatro hipótesis inicales, tres han sido aceptadas. Por un lado, en la línea de lo afrimado por Huamán, en el contexto de la pandemia, el sexo es una variable importante al determinar los factores que afectan al desempleo, ya que ser mujer representa un aumento en 75.56% de las probabilidades de no haber poseído un empleo la semana anterior a la encuesta del INEI. De la misma manera, al entrevistado tener mayor nivel de estudio se puede detallar que hay menores posibilidades de estar desempleado. Asimismo, al entrevistado contar con un año más de edad, hay más posibilidades de estar desempleado. Esto es importante ya que nos muestra que además de la variable del sexo, la edad y el nivel educativo también son factores relevantes para determinar el desempleo en Lima Metropolitana y el Callo.
+
+Estos hallazgos se pueden complementar con la literatura que nos habla de las desigualdades por género en el área del trabajo en especial en el Perú, ya que este no es problema reciente, y como se había expresado de manera previa, las consecuencias de la pandemia por COVID-19 y las medidas para disminuir su propagación han visibilizado de mayor manera las probelmáticas esstructurales ya existentes. Además de ello, estos resultados  obtenidos pueden ser útiles ante la poca literatura existente que explica el nivel de desempleo y sus causas en el contexto pandémico, esto debido que, al ser una problemática actual, los estudios son precavidos.
+
+A pesar de ello, nuestra hipótesis principal, la cual buscaba averiguar si los factores culturales determinaban el nivel de desempleo no logró ser significativa. Esta la podemos entender a partir de las limitaciones del trabajo, como que al ser un contexto que no ha culminado, el de la pandiam por el COVID-19, y que continuará desarrollándose, puede que estos factores sean más pronunciados en data más actual. Además de ello, sería importante revisar los datos del desempleo a nivel nacional, esto debido a que en Lima Metropolitana y en el Callao, hay más personas que se autoidentifican como mestizos, el cual es mayor a comparación de otras regiones del Perú en donde hay mayorías quechuas o aymaras. Esto sería importante para analizar cómo las variables culturales como la autoidentificación étnica se comportan respecto al desempleo en contextos distintos al limeño.
+
+En esta línea, nuestra recomendación va inclinado a que futuras investigaciones se centren en estudiar las limitaciones culturales y el nivel de desempleo no solo a nivel nacional, sino que se pueda complejizar el estudio respecto al trabajo informal, en donde dichas variables pueden ser más significativas.
 
 
 
@@ -208,6 +266,3 @@ https://github.com/pierobenate/Trabajo-grupal-Estad-stica-2---Ch-vez-y-Benate-.g
 • Organización Internacional del Trabajo. (2020). Impactos en el mercado de trabajo y los ingresos en América Latina y el Caribe. Panorama Laboral en tiempos de la COVID-19. Panorama Laboral 2020.
 
 • Zavala, Sorayda, Ventura, Laura, Parrales, Katty y Parrales, María. (2021). El desempleo: factor concluyente en la emergencia sanitaria por covid-19 en el Ecuador. Revista Publicando, 8(31), 128-141. https://doi.org/10.51528/rp.vol8.id2239  
-
-
-
